@@ -10,8 +10,10 @@ import os
 from auth.auth import dbname
 from about.about import about_bp
 from admin.admin import admin_bp
+from documents.documents import documents_bp
 from home.home import home_bp
 from auth.auth import  auth_bp
+from upload.upload import upload_bp
 from user.user import user_bp
 
 app = Flask(__name__)
@@ -23,8 +25,10 @@ app.config["SESSION_TYPE"] = "filesystem"     # Store session data in files
 # blueprints
 app.register_blueprint(about_bp,url_prefix='/DocsApp/about')
 app.register_blueprint(admin_bp,url_prefix='/DocsApp/admin')
+app.register_blueprint(documents_bp,url_prefix='/DocsApp/documents')
 app.register_blueprint(home_bp,url_prefix='/DocsApp')
 app.register_blueprint(auth_bp,url_prefix='/DocsApp')
+app.register_blueprint(upload_bp,url_prefix='/DocsApp/upload')
 app.register_blueprint(user_bp,url_prefix="/DocsApp/user")
 
 csrf = CSRFProtect(app)
