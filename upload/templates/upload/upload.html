@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <p>
-        upload
-    </p>
+
+
+<form action="/DocsApp/upload/handler" method="post" class="dropzone" id="myDropzone"
+        enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+</form>
+
 {% endblock %}
