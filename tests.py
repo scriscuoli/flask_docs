@@ -145,6 +145,8 @@ def dbtest3():
             if util.password_verify(pw,hpass) == True:
                 print ("Hello " + x["id"])
     
+def gymtest():
+    print(util.get_year_month("05302026211558.pdf"))  # → 2026/05
 
 def authTest():
     v = auth.checkUserPass("admin","password")
@@ -157,4 +159,5 @@ if __name__ == "__main__":
     #showTables("ncd")
     #test2()
     #adminInsertCollection()
-    authTest()
+    #authTest()
+    gymtest()

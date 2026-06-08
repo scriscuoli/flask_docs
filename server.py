@@ -6,23 +6,28 @@ from werkzeug.utils import secure_filename
 from waitress import serve
 from auth.auth import dbname
 from flask_dropzone import Dropzone
+from config import Config
+
 
 import os
 
-
+cfg = Config("config.ini")
 csrf = CSRFProtect()
 dropzone = Dropzone()
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'SDC'
+app.config['SECRET_KEY'] = cfg.SECRET_KEY
+app.config['DEBUG'] = cfg.DEBUG
+app.config["PDFS_FOLDER"] = cfg.PDFS_FOLDER
+app.config["THUMBNAILS_FOLDER"] = cfg.THUMBNAILS_FOLDER
 app.config['APP_NAME'] = dbname
 app.config["SESSION_PERMANENT"] = False     # Sessions expire when the browser is closed
 app.config["SESSION_TYPE"] = "filesystem"     # Store session data in files
 app.config['WTF_CSRF_HEADERS'] = ['X-CSRF-Token', 'X-CSRFToken']
 app.config['DROPZONE_ENABLE_CSRF'] = True
-app.config['DROPZONE_MAX_FILE_SIZE'] = 50  # MB
-app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50MB in bytes
+app.config['DROPZONE_MAX_FILE_SIZE'] = cfg.MAX_CONTENT_LENGTH_MB
+app.config['MAX_CONTENT_LENGTH'] = cfg.MAX_CONTENT_LENGTH_MB * 1024 * 1024  # 50MB in bytes
 
 
 csrf.init_app(app)
