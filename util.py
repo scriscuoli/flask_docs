@@ -75,12 +75,7 @@ def db_connect(databaseName):
 def getSiteName():
     return "Docs"
 
-def get_year_month(filename):
-    # Remove extension and parse: MMDDYYYYhhmmss
-    stem = filename.rsplit('.', 1)[0]
-    mm = stem[0:2]
-    yyyy = stem[4:8]
-    return f"{yyyy}/{mm}"
+
 
 
 
