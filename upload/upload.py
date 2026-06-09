@@ -1,5 +1,5 @@
 from flask import Blueprint,render_template,redirect,session,request,current_app
-from util import getSiteName,dbname
+from util import getSiteName,dbname,pdf_image_pull
 from config import Config
 
 import os
@@ -37,9 +37,13 @@ def show_upload_handler():
     }
     if request.method == 'POST':
         f = request.files.get('file')
-        cfg = Config()
+        cfg = current_app.config['CFG']
         pdfs_subfolder = cfg.get_file_location(f.filename,folder_only=True)
         os.makedirs(pdfs_subfolder,exist_ok=True)
         full_pdf_filename = cfg.get_file_location(f.filename)
         f.save(full_pdf_filename)
+        ym = cfg.get_year_month(f.filename)
+        thumbnails_dir = f"{cfg.THUMBNAILS_FOLDER}{os.sep}{ym}"
+        os.makedirs(thumbnails_dir,exist_ok=True)
+        thumbnails = pdf_image_pull(full_pdf_filename,thumbnails_dir)
     return render_template('upload/upload_handler.html',tvals=tvals)

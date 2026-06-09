@@ -1,6 +1,9 @@
 import bcrypt
 import mysql.connector
 import json
+from pathlib import Path
+import pymupdf
+import sys
 
 def password_hash(password: str, cost: int = 12) -> str:
     """
@@ -76,6 +79,19 @@ def getSiteName():
     return "Docs"
 
 
+def pdf_image_pull(inPdfFile:str, outDir:str):
+    doc = pymupdf.open(inPdfFile)
+    ipath = Path(inPdfFile)
+    opath = Path(outDir)
+    stem = ipath.stem
+    rtn = []
+    for i, page in enumerate(doc):
+        thumb_res = page.get_pixmap(matrix=pymupdf.Matrix(0.5, 0.5))
+        thumb_fn = str(stem) + f"_{i+1}-thumb.png"
+        thumb_path = opath / thumb_fn
+        thumb_bytes = thumb_res.tobytes("png")   # in-memory, no disk write
+        with open(thumb_path, "wb") as tf:
+                tf.write(thumb_bytes)
+        rtn.append({"page":i+1, "thumb":f"{thumb_fn}"})
 
-
-
+    return rtn

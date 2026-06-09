@@ -28,7 +28,7 @@ app.config['WTF_CSRF_HEADERS'] = ['X-CSRF-Token', 'X-CSRFToken']
 app.config['DROPZONE_ENABLE_CSRF'] = True
 app.config['DROPZONE_MAX_FILE_SIZE'] = cfg.MAX_CONTENT_LENGTH_MB
 app.config['MAX_CONTENT_LENGTH'] = cfg.MAX_CONTENT_LENGTH_MB * 1024 * 1024  # 50MB in bytes
-
+app.config['CFG'] = cfg
 
 csrf.init_app(app)
 dropzone.init_app(app)
