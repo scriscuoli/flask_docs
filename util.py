@@ -92,6 +92,6 @@ def pdf_image_pull(inPdfFile:str, outDir:str):
         thumb_bytes = thumb_res.tobytes("png")   # in-memory, no disk write
         with open(thumb_path, "wb") as tf:
                 tf.write(thumb_bytes)
-        rtn.append({"page":i+1, "thumb":f"{thumb_fn}"})
+        rtn.append({"page":i+1, "path":f"{thumb_fn}"})
 
     return rtn

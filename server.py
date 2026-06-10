@@ -27,6 +27,8 @@ app.config["SESSION_TYPE"] = "filesystem"     # Store session data in files
 app.config['WTF_CSRF_HEADERS'] = ['X-CSRF-Token', 'X-CSRFToken']
 app.config['DROPZONE_ENABLE_CSRF'] = True
 app.config['DROPZONE_MAX_FILE_SIZE'] = cfg.MAX_CONTENT_LENGTH_MB
+app.config['DROPZONE_ALLOWED_FILE_CUSTOM'] = True
+app.config['DROPZONE_ALLOWED_FILE_TYPE'] = '.pdf'
 app.config['MAX_CONTENT_LENGTH'] = cfg.MAX_CONTENT_LENGTH_MB * 1024 * 1024  # 50MB in bytes
 app.config['CFG'] = cfg
 
