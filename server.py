@@ -42,6 +42,7 @@ from home.home import home_bp
 from auth.auth import  auth_bp
 from upload.upload import upload_bp
 from user.user import user_bp
+from scanned.scanned import scanned_bp
 
 
 # blueprints
@@ -52,6 +53,7 @@ app.register_blueprint(home_bp,url_prefix='/DocsApp')
 app.register_blueprint(auth_bp,url_prefix='/DocsApp')
 app.register_blueprint(upload_bp,url_prefix='/DocsApp/upload')
 app.register_blueprint(user_bp,url_prefix="/DocsApp/user")
+app.register_blueprint(scanned_bp,url_prefix="/DocsApp/scanned")
 
 
 

@@ -29,10 +29,10 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `pages`;
 CREATE TABLE `pages` (
-  `pID` int(11) NOT NULL,
-  `sfID` int(11) NOT NULL,
-  `path` varchar(200) NOT NULL,
-  `date` date NOT NULL,
+  `pg_id` int(11) NOT NULL,
+  `sf_id` int(11) NOT NULL,
+  `pg_path` varchar(200) NOT NULL,
+  `pg_date` date NOT NULL,
   `sf_page_number` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -44,7 +44,7 @@ CREATE TABLE `pages` (
 -- Indexes for table `pages`
 --
 ALTER TABLE `pages`
-  ADD PRIMARY KEY (`pID`);
+  ADD PRIMARY KEY (`pg_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -54,7 +54,7 @@ ALTER TABLE `pages`
 -- AUTO_INCREMENT for table `pages`
 --
 ALTER TABLE `pages`
-  MODIFY `pID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `pg_id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -2,26 +2,34 @@
 {% block content %}
 <h5>Document Management</h5>
 
-<div>Scanned Files: </span>
-<table class="table table-hover table-responsive table-sm">
-  <thead class="thead-dark">
-    <tr>
-      <th rowspan="2" >Scanned Files</th>
-      <th colspan="3" >Pages</th>
-      <th rowspan="2" >Total Documents</th>
-    </tr>
-    <tr>
-        <th>D</th><th>U</th><th>T</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>{{ summary['sfc'] }}</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>{{ summary['pc'] }}</td>
-      <td>&nbsp;</td>
-    </tr>
-  </tbody>
-</table>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-5">
+      <table class="table table-hover table-bordered table-responsive table-sm">
+        <thead class="thead-dark">
+          <tr>
+            <th rowspan="2" >Scanned Files</th>
+            <th colspan="3" >Pages</th>
+            <th rowspan="2" >Total Documents</th>
+          </tr>
+          <tr>
+              <th>D</th><th>U</th><th>T</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ summary['sfc'] }}</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>{{ summary['pc'] }}</td>
+            <td>&nbsp;</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-7">&nbsp;</div>
+  </div>
+</div>
+
 {% endblock %}

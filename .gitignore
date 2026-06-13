@@ -53,3 +53,5 @@ docs/_build/
 # project related
 test-data/output
 test-data/drop
+static/images/pdfs/
+static/images/thumbnails

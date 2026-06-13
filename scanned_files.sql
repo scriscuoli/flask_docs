@@ -29,9 +29,9 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `scanned_files`;
 CREATE TABLE `scanned_files` (
-  `sfID` int(11) NOT NULL,
-  `path` varchar(200) NOT NULL,
-  `creation_date` date NOT NULL
+  `sf_id` int(11) NOT NULL,
+  `sf_path` varchar(200) NOT NULL,
+  `sf_creation_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `scanned_files` (
 -- Indexes for table `scanned_files`
 --
 ALTER TABLE `scanned_files`
-  ADD PRIMARY KEY (`sfID`);
+  ADD PRIMARY KEY (`sf_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -52,7 +52,7 @@ ALTER TABLE `scanned_files`
 -- AUTO_INCREMENT for table `scanned_files`
 --
 ALTER TABLE `scanned_files`
-  MODIFY `sfID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `sf_id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

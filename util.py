@@ -78,6 +78,19 @@ def db_connect(databaseName):
 def getSiteName():
     return "Docs"
 
+def get_pdf_file_date(inPdfFile:str):
+    # mmddyyyyHHMMSS...
+    stem = inPdfFile.rsplit('.', 1)[0]
+    mm = stem[0:2]
+    dd = stem[2:4]
+    yyyy = stem[4:8]
+    rtn  = {
+        "year":f"{yyyy}",
+        "month":f"{mm}",
+        "day":f"{dd}"
+        }
+    return rtn
+    
 
 def pdf_image_pull(inPdfFile:str, outDir:str):
     doc = pymupdf.open(inPdfFile)
