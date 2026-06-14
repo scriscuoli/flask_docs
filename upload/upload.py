@@ -1,7 +1,7 @@
 from flask import Blueprint,render_template,redirect,session,request,current_app
 from util import getSiteName,dbname,pdf_image_pull
 from config import Config
-from upload.query import add_pdf_to_db,add_thumbnails_to_db
+from upload.query import add_pdf_to_db,add_thumbnails_to_db,update_sf_page_count
 import os
 
 
@@ -47,6 +47,7 @@ def show_upload_handler():
         thumbnails_dir = f"{cfg.THUMBNAILS_FOLDER}{os.sep}{ym}"
         os.makedirs(thumbnails_dir,exist_ok=True)
         thumbnails = pdf_image_pull(full_pdf_filename,thumbnails_dir)
+        update_sf_page_count(sf_id,len(thumbnails))
         th = add_thumbnails_to_db(sf_id=sf_id,thumbnails=thumbnails)
         #print(thumbnails)
     return render_template('upload/upload_handler.html',tvals=tvals)

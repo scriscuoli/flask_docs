@@ -1,5 +1,5 @@
-from flask import Blueprint,render_template,redirect,session,request,current_app
-from util import getSiteName,dbname,pdf_image_pull
+from flask import Blueprint,render_template,redirect,session,request,current_app,url_for
+from util import getSiteName,dbname,get_pdf_file_date
 from config import Config
 from scanned.query import get_scanned
 import os
@@ -22,6 +22,21 @@ def show_scanned():
         "pageDescription": ""
     }
     result = get_scanned()
-    print(result)
-    return render_template('scanned/scanned.html',tvals=tvals)
+    updated_result = add_to_result(result)
+    print(updated_result)
+    sf_root = url_for('static', filename='images/pdfs')
+    pg_root = url_for('static', filename='images/thumbnails')
+    return render_template('scanned/scanned.html',result=updated_result,tvals=tvals)
 
+
+def add_to_result(result:list):
+    rtn = []
+    sf_root = url_for('static', filename='images/pdfs')
+    pg_root = url_for('static', filename='images/thumbnails')
+    for r in result:
+        row = r.copy()
+        ymd = get_pdf_file_date(row["sf_path"])
+        row['sf_url'] = f"{sf_root}/{ymd['year']}/{ymd['month']}/{row['sf_path']}"
+        row['pg_url'] = f"{pg_root}/{ymd['year']}/{ymd['month']}/{row['pg_path']}"
+        rtn.append(row)
+    return rtn

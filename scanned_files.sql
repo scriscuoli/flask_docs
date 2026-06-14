@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 10, 2026 at 06:43 PM
+-- Generation Time: Jun 13, 2026 at 11:38 PM
 -- Server version: 10.11.14-MariaDB-0ubuntu0.24.04.1
 -- PHP Version: 8.3.6
 
@@ -31,7 +31,8 @@ DROP TABLE IF EXISTS `scanned_files`;
 CREATE TABLE `scanned_files` (
   `sf_id` int(11) NOT NULL,
   `sf_path` varchar(200) NOT NULL,
-  `sf_creation_date` date NOT NULL
+  `sf_creation_date` date NOT NULL,
+  `sf_page_count` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
