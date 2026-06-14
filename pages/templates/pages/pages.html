@@ -4,11 +4,15 @@
 <div class="container">
   <div class="d-flex flex-wrap overflow-auto" style="max-height: 500px;">
     {% for r in result %}
-    <div class="card m-2" style="width: 18rem;">
+    {% if r['undoc'] == 1 %}
+      <div class="card m-2" style="width: 18rem; border-color: red;">
+    {% else %}
+      <div class="card m-2" style="width: 18rem;">
+    {% endif %}
       <img class="card-img-top" style="max-width:200px; max-height:300px" src="{{ r['pg_url'] }}"/>
       <div class="card-body">
-        <h5 class="card-title">{{ r['sf_path'] }}</h5>
-        <a href="/DocsApp/pages/{{ r['sf_id'] }}" target="_blank" class="card-text">{{ r['sf_page_count'] }} page(s)</a>
+        <pre class="card-title">{{ r['pg_path'] }}</pre>
+        <pre class="card-title">Page {{ r['sf_page_number'] }}</pre>
       </div>
     </div>
     {% endfor %}

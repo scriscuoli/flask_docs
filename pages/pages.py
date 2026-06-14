@@ -1,42 +1,44 @@
 from flask import Blueprint,render_template,redirect,session,request,current_app,url_for
 from util import getSiteName,dbname,get_pdf_file_date
 from config import Config
-from scanned.query import get_scanned
+from pages.query import get_pages_for_scanned_file,get_undocumented_pages_for_scanned_file
 import os
 
 
-scanned_bp = Blueprint('scanned_bp', __name__,
+pages_bp = Blueprint('pages_bp', __name__,
                      template_folder='templates',
-                     static_url_path='scanned')
+                     static_url_path='pages')
 
-@scanned_bp.route('/')
-def show_scanned():
+@pages_bp.route('/<int:sf_id>')
+def show_pages(sf_id:int):
     if not session.get("name"):
         return redirect("/DocsApp/login")
     tvals = {
         "site": getSiteName(),
         "database" : dbname,
         "name": session.get("name"),
-        "title":"Scanned",
+        "title":"Pages",
         "pageTitle": "",
         "pageDescription": ""
     }
-    result = get_scanned(60)
-    updated_result = add_to_result(result)
+    result = get_pages_for_scanned_file(sf_id,False)
+    updated_result = add_to_result(sf_id,result)
     print(updated_result)
-    sf_root = url_for('static', filename='images/pdfs')
-    pg_root = url_for('static', filename='images/thumbnails')
-    return render_template('scanned/scanned.html',result=updated_result,tvals=tvals)
+    
+    return render_template('pages/pages.html',result=updated_result,tvals=tvals)
 
 
-def add_to_result(result:list):
+def add_to_result(sf_id:int,result:list):
     rtn = []
-    sf_root = url_for('static', filename='images/pdfs')
+    upl = get_undocumented_pages_for_scanned_file(sf_id)
     pg_root = url_for('static', filename='images/thumbnails')
     for r in result:
         row = r.copy()
-        ymd = get_pdf_file_date(row["sf_path"])
-        row['sf_url'] = f"{sf_root}/{ymd['year']}/{ymd['month']}/{row['sf_path']}"
+        ymd = get_pdf_file_date(row["pg_path"])
         row['pg_url'] = f"{pg_root}/{ymd['year']}/{ymd['month']}/{row['pg_path']}"
+        if row['pg_id'] in upl:
+            row['undoc'] = 1
+        else:
+            row['undoc'] = 0
         rtn.append(row)
     return rtn

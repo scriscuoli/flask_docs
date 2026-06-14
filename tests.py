@@ -3,6 +3,7 @@ import os
 import sys
 import util
 import auth
+from pages.query import get_undocumented_pages_for_scanned_file
 
 def test1():
     password="189565174"
@@ -152,6 +153,11 @@ def authTest():
     v = auth.checkUserPass("admin","password")
     print("authTest: " + str(v))
 
+def sql_test():
+    h = get_undocumented_pages_for_scanned_file(1)
+    print(h)
+
+
 if __name__ == "__main__":
     #adminInsertCollection()
     #showTables("collection")
@@ -160,4 +166,5 @@ if __name__ == "__main__":
     #test2()
     #adminInsertCollection()
     #authTest()
-    gymtest()
+    #gymtest()
+    sql_test()
