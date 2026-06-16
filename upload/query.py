@@ -27,15 +27,15 @@ def update_sf_page_count(sf_id,sf_page_count):
     cursor.execute(sqlString)
     connection.commit()
 
-def add_thumbnails_to_db(sf_id:int, thumbnails:list):
+def add_pages_to_db(sf_id:int, pages:list):
     connection = db_connect(dbname)
     pg_date = datetime.now().strftime("%Y-%m-%d")
     cursor = connection.cursor(dictionary=True)
     sqlString = "insert into pages (sf_id,pg_path,pg_date,sf_page_number) values "
     sep = ""
-    for thumbnail in thumbnails:
-        sf_page_number = thumbnail["page"]
-        pg_path = thumbnail["path"]
+    for page in pages:
+        sf_page_number = page["page"]
+        pg_path = page["path"]
         sqlString = sqlString + sep + f"({sf_id},'{pg_path}','{pg_date}',{sf_page_number})"
         sep = ","
     #print(sqlString)

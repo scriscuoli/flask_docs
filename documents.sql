@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 14, 2026 at 09:00 AM
+-- Generation Time: Jun 16, 2026 at 12:16 AM
 -- Server version: 10.11.14-MariaDB-0ubuntu0.24.04.1
 -- PHP Version: 8.3.6
 
@@ -30,7 +30,8 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `documents`;
 CREATE TABLE `documents` (
   `dc_id` int(11) NOT NULL,
-  `dc_name` varchar(200) NOT NULL
+  `dc_name` varchar(200) NOT NULL,
+  `dc_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

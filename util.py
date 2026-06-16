@@ -99,12 +99,13 @@ def pdf_image_pull(inPdfFile:str, outDir:str):
     stem = ipath.stem
     rtn = []
     for i, page in enumerate(doc):
-        thumb_res = page.get_pixmap(matrix=pymupdf.Matrix(0.5, 0.5))
-        thumb_fn = str(stem) + f"_{i+1}-thumb.png"
-        thumb_path = opath / thumb_fn
-        thumb_bytes = thumb_res.tobytes("png")   # in-memory, no disk write
-        with open(thumb_path, "wb") as tf:
-                tf.write(thumb_bytes)
-        rtn.append({"page":i+1, "path":f"{thumb_fn}"})
+        #page_res = page.get_pixmap(matrix=pymupdf.Matrix(0.5, 0.5))
+        page_res = page.get_pixmap()
+        page_fn = str(stem) + f"_{i+1}.png"
+        page_path = opath / page_fn
+        page_bytes = page_res.tobytes("png")   # in-memory, no disk write
+        with open(page_path, "wb") as tf:
+                tf.write(page_bytes)
+        rtn.append({"page":i+1, "path":f"{page_fn}"})
 
     return rtn

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 31, 2026 at 01:39 AM
+-- Generation Time: Jun 16, 2026 at 12:20 AM
 -- Server version: 10.11.14-MariaDB-0ubuntu0.24.04.1
 -- PHP Version: 8.3.6
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `docs`
 --
+CREATE DATABASE IF NOT EXISTS `docs` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `docs`;
 
 -- --------------------------------------------------------
 
@@ -27,9 +29,11 @@ SET time_zone = "+00:00";
 -- Table structure for table `documents`
 --
 
+DROP TABLE IF EXISTS `documents`;
 CREATE TABLE `documents` (
-  `dID` int(11) NOT NULL,
-  `name` varchar(200) NOT NULL
+  `dc_id` int(11) NOT NULL,
+  `dc_name` varchar(200) NOT NULL,
+  `dc_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -38,11 +42,10 @@ CREATE TABLE `documents` (
 -- Table structure for table `document_page`
 --
 
+DROP TABLE IF EXISTS `document_page`;
 CREATE TABLE `document_page` (
-  `dpID` int(11) NOT NULL,
-  `dID` int(11) NOT NULL,
-  `pID` int(11) NOT NULL,
-  `dp_page_number` int(11) NOT NULL
+  `dc_id` int(11) NOT NULL,
+  `pg_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -51,10 +54,10 @@ CREATE TABLE `document_page` (
 -- Table structure for table `document_tag`
 --
 
+DROP TABLE IF EXISTS `document_tag`;
 CREATE TABLE `document_tag` (
-  `dtID` int(11) NOT NULL,
-  `dID` int(11) NOT NULL,
-  `tID` int(11) NOT NULL
+  `dc_id` int(11) NOT NULL,
+  `tg_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -63,9 +66,12 @@ CREATE TABLE `document_tag` (
 -- Table structure for table `pages`
 --
 
+DROP TABLE IF EXISTS `pages`;
 CREATE TABLE `pages` (
-  `pID` int(11) NOT NULL,
-  `path` varchar(200) NOT NULL,
+  `pg_id` int(11) NOT NULL,
+  `sf_id` int(11) NOT NULL,
+  `pg_path` varchar(200) NOT NULL,
+  `pg_date` date NOT NULL,
   `sf_page_number` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -75,10 +81,12 @@ CREATE TABLE `pages` (
 -- Table structure for table `scanned_files`
 --
 
+DROP TABLE IF EXISTS `scanned_files`;
 CREATE TABLE `scanned_files` (
-  `sfID` int(11) NOT NULL,
-  `path` varchar(200) NOT NULL,
-  `creation_date` date NOT NULL
+  `sf_id` int(11) NOT NULL,
+  `sf_path` varchar(200) NOT NULL,
+  `sf_creation_date` date NOT NULL,
+  `sf_page_count` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -87,9 +95,10 @@ CREATE TABLE `scanned_files` (
 -- Table structure for table `tags`
 --
 
+DROP TABLE IF EXISTS `tags`;
 CREATE TABLE `tags` (
-  `tID` int(11) NOT NULL,
-  `name` varchar(200) NOT NULL
+  `tg_id` int(11) NOT NULL,
+  `tg_name` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -98,6 +107,7 @@ CREATE TABLE `tags` (
 -- Table structure for table `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `uID` int(11) NOT NULL,
   `userName` varchar(50) NOT NULL,
@@ -122,37 +132,25 @@ INSERT INTO `user` (`uID`, `userName`, `password`, `firstName`, `lastName`) VALU
 -- Indexes for table `documents`
 --
 ALTER TABLE `documents`
-  ADD PRIMARY KEY (`dID`);
-
---
--- Indexes for table `document_page`
---
-ALTER TABLE `document_page`
-  ADD PRIMARY KEY (`dpID`);
-
---
--- Indexes for table `document_tag`
---
-ALTER TABLE `document_tag`
-  ADD PRIMARY KEY (`dtID`);
+  ADD PRIMARY KEY (`dc_id`);
 
 --
 -- Indexes for table `pages`
 --
 ALTER TABLE `pages`
-  ADD PRIMARY KEY (`pID`);
+  ADD PRIMARY KEY (`pg_id`);
 
 --
 -- Indexes for table `scanned_files`
 --
 ALTER TABLE `scanned_files`
-  ADD PRIMARY KEY (`sfID`);
+  ADD PRIMARY KEY (`sf_id`);
 
 --
 -- Indexes for table `tags`
 --
 ALTER TABLE `tags`
-  ADD PRIMARY KEY (`tID`);
+  ADD PRIMARY KEY (`tg_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -162,37 +160,25 @@ ALTER TABLE `tags`
 -- AUTO_INCREMENT for table `documents`
 --
 ALTER TABLE `documents`
-  MODIFY `dID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `document_page`
---
-ALTER TABLE `document_page`
-  MODIFY `dpID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `document_tag`
---
-ALTER TABLE `document_tag`
-  MODIFY `dtID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `dc_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pages`
 --
 ALTER TABLE `pages`
-  MODIFY `pID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `pg_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `scanned_files`
 --
 ALTER TABLE `scanned_files`
-  MODIFY `sfID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `sf_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `tID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `tg_id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

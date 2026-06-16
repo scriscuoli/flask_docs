@@ -56,12 +56,13 @@ def pdf_image_pull(inPdfFile:str, outDir:str):
         with open(ocr_path, "wb") as tf:
                 tf.write(ocr_bytes)
 
-        thumb_res = page.get_pixmap(matrix=pymupdf.Matrix(0.5, 0.5))
-        thumb_fn = str(stem) + f"_{i+1}-thumb.png"
-        thumb_path = opath / thumb_fn
-        thumb_bytes = thumb_res.tobytes("png")   # in-memory, no disk write
-        with open(thumb_path, "wb") as tf:
-                tf.write(thumb_bytes)
+        #page_res = page.get_pixmap(matrix=pymupdf.Matrix(0.5, 0.5))
+        page_res = page.get_pixmap(matrix=pymupdf.Matrix(0.5, 0.5))
+        page_fn = str(stem) + f"_{i+1}.png"
+        page_path = opath / page_fn
+        page_bytes = page_res.tobytes("png")   # in-memory, no disk write
+        with open(page_path, "wb") as tf:
+                tf.write(page_bytes)
         rtn.append({"page":i+1, "thumb":f"{thumb_fn}", "ocr":f"{ocr_fn}"})
         
 

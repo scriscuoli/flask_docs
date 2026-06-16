@@ -31,7 +31,7 @@ def show_pages(sf_id:int):
 def add_to_result(sf_id:int,result:list):
     rtn = []
     upl = get_undocumented_pages_for_scanned_file(sf_id)
-    pg_root = url_for('static', filename='images/thumbnails')
+    pg_root = url_for('static', filename='images/pages')
     for r in result:
         row = r.copy()
         ymd = get_pdf_file_date(row["pg_path"])

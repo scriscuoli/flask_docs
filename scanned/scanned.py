@@ -25,14 +25,14 @@ def show_scanned():
     updated_result = add_to_result(result)
     print(updated_result)
     sf_root = url_for('static', filename='images/pdfs')
-    pg_root = url_for('static', filename='images/thumbnails')
+    pg_root = url_for('static', filename='images/pages')
     return render_template('scanned/scanned.html',result=updated_result,tvals=tvals)
 
 
 def add_to_result(result:list):
     rtn = []
     sf_root = url_for('static', filename='images/pdfs')
-    pg_root = url_for('static', filename='images/thumbnails')
+    pg_root = url_for('static', filename='images/pages')
     for r in result:
         row = r.copy()
         ymd = get_pdf_file_date(row["sf_path"])

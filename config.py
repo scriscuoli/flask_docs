@@ -19,15 +19,15 @@ class Config:
         # Storage settings — resolve to absolute path
         raw_pdfs_folder = self.parser.get("storage", "pdfs_folder")
         self.PDFS_FOLDER = os.path.abspath(raw_pdfs_folder)
-        raw_thumbnails_folder = self.parser.get("storage", "thumbnails_folder")
-        self.THUMBNAILS_FOLDER = os.path.abspath(raw_thumbnails_folder)
+        raw_pages_folder = self.parser.get("storage", "pages_folder")
+        self.PAGES_FOLDER = os.path.abspath(raw_pages_folder)
 
         max_mb = self.parser.getint("storage", "max_content_length_mb")
         self.MAX_CONTENT_LENGTH_MB = max_mb 
 
         # Ensure the folder exists
         os.makedirs(self.PDFS_FOLDER, exist_ok=True)
-        os.makedirs(self.THUMBNAILS_FOLDER, exist_ok=True)
+        os.makedirs(self.PAGES_FOLDER, exist_ok=True)
 
     def get_year_month(self,filename):
         # Remove extension and parse: MMDDYYYYhhmmss
@@ -49,11 +49,11 @@ class Config:
                 rtn = str(os.path.join(pdfs_subfolder, filename))
         elif filename.upper().endswith(".PNG"):
             subdir = self.get_year_month(filename)
-            thumbnail_subfolder = f"{self.THUMBNAILS_FOLDER}{os.sep}{subdir}"
+            pages_subfolder = f"{self.PAGES_FOLDER}{os.sep}{subdir}"
             if folder_only:
-                rtn = thumbnail_subfolder
+                rtn = pages_subfolder
             else:
-                rtn = str(os.path.join(thumbnail_subfolder, filename))
+                rtn = str(os.path.join(pages_subfolder, filename))
 
         return rtn
     
@@ -66,11 +66,11 @@ if __name__ == "__main__":
     print(f"{pdf_file} is at {full_pdf}")
     print(f"folder is  {pdf_dir}")
 
-    thumbnail_file = "05192026000000-01.png"
-    thumbnail_dir = cfg.get_file_location(thumbnail_file,folder_only=True)
-    full_thm = cfg.get_file_location(thumbnail_file)
-    print(f"{thumbnail_file} is at {full_thm}")
-    print(f"folder is  {thumbnail_dir}")
+    pages_file = "05192026000000-01.png"
+    pages_dir = cfg.get_file_location(pages_file,folder_only=True)
+    full_thm = cfg.get_file_location(pages_file)
+    print(f"{pages_file} is at {full_thm}")
+    print(f"folder is  {pages_dir}")
 
 
     
