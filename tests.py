@@ -167,4 +167,6 @@ if __name__ == "__main__":
     #adminInsertCollection()
     #authTest()
     #gymtest()
-    sql_test()
+    #sql_test()
+    result = util.parseDocumentCommand(sys.argv[1])
+    print(result)

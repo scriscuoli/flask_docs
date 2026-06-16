@@ -3,7 +3,9 @@ import mysql.connector
 import json
 from pathlib import Path
 import pymupdf
-import sys
+import os
+from datetime import date
+
 
 def password_hash(password: str, cost: int = 12) -> str:
     """
@@ -108,4 +110,39 @@ def pdf_image_pull(inPdfFile:str, outDir:str):
                 tf.write(page_bytes)
         rtn.append({"page":i+1, "path":f"{page_fn}"})
 
+    return rtn
+
+def parseDocSpec(docSpec:str):
+    name="unknown"
+    dateVal = date.today().strftime("%Y-%m-%d")
+    pages = []
+    print(f"Starting with =>{docSpec}<=")
+    np = docSpec.split(":")
+    # 
+    
+    if len(np) == 2:
+        name=np[0]
+    if len(np) == 3:
+        name = np[0]
+        dateVal = np[1]
+    pageSpec=np[-1]
+    pageParts=pageSpec.split(",")
+    for parts in pageParts:
+        pr=parts.split("-")
+        if len(pr) == 1 :
+            pages.append(int(pr[0]))
+        else:
+            x=int(pr[0])
+            y=1+int(pr[1])
+            for n in range(x,y):
+                pages.append(n)
+    return {"name":name,"date": dateVal, "pages":pages}
+
+def parseDocumentCommand(command:str):
+    rtn = []
+    print(f"Starting with =>{command}<=")
+    specs = command.split("|")
+    for spec in specs:
+        ds = parseDocSpec(spec)
+        rtn.append(ds)
     return rtn
