@@ -1,15 +1,15 @@
 -- Create the database if it doesn't exist
-CREATE DATABASE IF NOT EXISTS accounts;
+CREATE DATABASE IF NOT EXISTS docs;
 
--- Create the user 'accounts' that can connect from any host ('%')
+-- Create the user 'docs' that can connect from any host ('%')
 -- Replace 'your_strong_password' with a secure password
-CREATE USER 'accounts'@'%' IDENTIFIED BY 'SpenceR315!!';
+CREATE USER 'docs'@'%' IDENTIFIED BY '!QAZ2wsx#EDC4rfv';
 
--- Grant all privileges on the 'accounts' database to the 'accounts' user
-GRANT ALL PRIVILEGES ON accounts.* TO 'accounts'@'%';
+-- Grant all privileges on the 'docs' database to the 'docs' user
+GRANT ALL PRIVILEGES ON docs.* TO 'docs'@'%';
 
 -- Flush privileges to apply the changes
 FLUSH PRIVILEGES;
 
 -- Optional: To verify the grants for the user
-SHOW GRANTS FOR 'accounts'@'%';
+SHOW GRANTS FOR 'docs'@'%';
