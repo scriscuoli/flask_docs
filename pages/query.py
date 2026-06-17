@@ -2,7 +2,7 @@ import util
 import math
 from decimal import *
 from datetime import date, timedelta
-
+from documents.query import create_document
 dbname = util.dbname
 
     
@@ -20,6 +20,35 @@ def get_pages_for_scanned_file(sf_id:int, index_only=True):
         return indices
     else:
         return full_set
+    
+def get_pids_for_pages(sf_id:int, pages:list):
+    connection = util.db_connect(dbname)
+    cursor = connection.cursor(dictionary=True)
+    # SELECT pg_id FROM `pages` WHERE sf_id = 2 and sf_page_number in (1,2,3);
+    pgs = ",".join(map(str, pages))
+    sqlString = f"SELECT pg_id FROM `pages` WHERE sf_id = {sf_id} and sf_page_number in ({pgs});"
+    cursor.execute(sqlString)
+    full_set = cursor.fetchall()
+    return full_set
+
+def create_document_page_entry(dc_id:int, pg_id:int):
+    connection = util.db_connect(dbname)
+    cursor = connection.cursor(dictionary=True)
+    sqlString = f"insert into document_page (dc_id,pg_id) values ('{dc_id}','{pg_id}');"
+    #print(sqlString)
+    
+    cursor.execute(sqlString)
+    dc_id = cursor.lastrowid
+    connection.commit()
+    return dc_id
+
+def create_document_from_spec(sf_id:int, spec:dict):
+    # spec example {'name': 'xtreme', 'date': '2026-06-15', 'pages': [1, 2, 3, 4]}
+    dc_id = create_document(spec['name'],spec['date'])
+    rows = get_pids_for_pages(sf_id,spec['pages'])
+    for row in rows:
+        pg_id = row['pg_id']
+        create_document_page_entry(dc_id,pg_id)
 
 def get_undocumented_pages_for_scanned_file(sf_id:int):
     rtn = []

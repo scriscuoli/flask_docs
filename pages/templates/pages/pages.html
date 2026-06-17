@@ -2,14 +2,18 @@
 {% block content %}
 
 <div class="container">
+  <form method="POST">
+    {{ form.csrf_token }} 
+    {{ form.command(size=50) }} {{ form.submit() }}
+  </form>
   <div class="d-flex flex-wrap overflow-auto" style="max-height: 500px;">
     {% for r in result %}
     {% if r['undoc'] == 1 %}
-      <div class="card m-2" style="width: 18rem; border-color: red;">
+      <div class="card m-2" style="width: 18rem; border-color: red; padding-top: 1rem;">
     {% else %}
-      <div class="card m-2" style="width: 18rem;">
+      <div class="card m-2" style="width: 18rem; border-color: blue; padding-top: 1rem;">
     {% endif %}
-      <img class="card-img-top" style="max-width:200px; max-height:300px" src="{{ r['pg_url'] }}"/>
+      <img class="card-img-top mx-auto d-block" style="max-width:200px; max-height:300px" src="{{ r['pg_url'] }}"/>
       <div class="card-body">
         <pre class="card-title">{{ r['pg_path'] }}</pre>
         <pre class="card-title">Page {{ r['sf_page_number'] }}</pre>
