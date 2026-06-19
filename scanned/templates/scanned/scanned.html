@@ -4,8 +4,8 @@
 <div class="container">
   <div class="d-flex flex-wrap overflow-auto" style="max-height: 500px;">
     {% for r in result %}
-    <div class="card m-2" style="width: 18rem;">
-      <img class="card-img-top" style="max-width:200px; max-height:300px" src="{{ r['pg_url'] }}"/>
+    <div class="card m-2" style="width: 18rem; padding-top: 1rem;">
+      <img class="card-img-top mx-auto d-block" style="max-width:200px; max-height:300px" src="{{ r['pg_url'] }}"/>
       <div class="card-body">
         <h5 class="card-title">{{ r['sf_path'] }}</h5>
         <a href="/DocsApp/pages/{{ r['sf_id'] }}" class="card-text">{{ r['sf_page_count'] }} page(s)</a>

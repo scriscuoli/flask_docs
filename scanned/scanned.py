@@ -24,8 +24,6 @@ def show_scanned():
     result = get_scanned(60)
     updated_result = add_to_result(result)
     print(updated_result)
-    sf_root = url_for('static', filename='images/pdfs')
-    pg_root = url_for('static', filename='images/pages')
     return render_template('scanned/scanned.html',result=updated_result,tvals=tvals)
 
 

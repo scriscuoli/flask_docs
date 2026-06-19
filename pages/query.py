@@ -73,3 +73,32 @@ def get_undocumented_pages_for_scanned_file(sf_id:int):
             rtn.append(row['pg_id'])
     return rtn
 
+def get_page_count():
+    connection = util.db_connect(dbname)
+    cursor = connection.cursor(dictionary=True)
+    sqlString = "SELECT count(*) as page_count FROM `pages` WHERE 1;"
+    cursor.execute(sqlString)
+    full_set = cursor.fetchall()
+    rtn = 0
+    for row in full_set:
+        rtn = row['page_count']
+    return rtn
+
+def get_documented_page_count():
+    connection = util.db_connect(dbname)
+    cursor = connection.cursor(dictionary=True)
+    sqlString = "SELECT count(distinct pg_id) as documented_page_count FROM `document_page` WHERE 1;"
+    cursor.execute(sqlString)
+    full_set = cursor.fetchall()
+    rtn = 0
+    for row in full_set:
+        rtn = row['documented_page_count']
+    return rtn
+
+def get_pages_for_doc(dc_id:int):
+    connection = util.db_connect(dbname)
+    cursor = connection.cursor(dictionary=True)
+    sqlString = f"SELECT pg.* from `pages` pg, document_page dp where pg.pg_id = dp.pg_id and dp.dc_id = {dc_id} order by pg.sf_page_number;"
+    cursor.execute(sqlString)
+    full_set = cursor.fetchall()
+    return full_set

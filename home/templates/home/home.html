@@ -6,7 +6,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-5">
-      <table class="table table-hover table-bordered table-responsive table-sm">
+      <table class="table table-hover table-bordered table-responsive table-sm text-center">
         <thead class="thead-dark">
           <tr>
             <th rowspan="2" >Scanned Files</th>
@@ -20,10 +20,10 @@
         <tbody>
           <tr>
             <td>{{ summary['sfc'] }}</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td>{{ summary['dpc'] }}</td>
+            <td>{{ summary['upc'] }}</td>
             <td>{{ summary['pc'] }}</td>
-            <td>&nbsp;</td>
+            <td>{{ summary['total_documents'] }}</td>
           </tr>
         </tbody>
       </table>

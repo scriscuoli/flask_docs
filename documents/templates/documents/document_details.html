@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="docname">Name: {{ doc_details['dc_name'] }}</div>
+    <div class="docdate">Date: {{ doc_details['dc_date'] }}</div>
+  </div>
+  <div class="row">
+    <div class="d-flex flex-wrap overflow-auto" style="max-height: 500px;">
+        {% for r in pages %}
+        <div class="card m-2" style="width: 18rem; padding-top: 1rem;">
+        <img class="card-img-top mx-auto d-block" style="max-width:200px; max-height:300px" src="{{ r['pg_url'] }}"/>
+        <div class="card-body">
+            <h5 class="card-title">{{ r['pg_path'] }}</h5>
+        </div>
+        </div>
+        {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
