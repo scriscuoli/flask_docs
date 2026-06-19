@@ -49,7 +49,7 @@ def password_verify(password: str, hashed_password: str) -> bool:
 
 
 docs_db_config = {
-    "host": "10.0.0.5",
+    "host": "localhost",
     "database" : "docs",
     "user" : "docs",
     "passwd" : "!QAZ2wsx#EDC4rfv",

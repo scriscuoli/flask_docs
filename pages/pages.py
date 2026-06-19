@@ -1,5 +1,5 @@
 from flask import Blueprint,render_template,redirect,session,request,current_app,url_for
-from util import getSiteName,dbname,get_pdf_file_date,parseDocumentCommand
+from util import getSiteName,dbname,get_pdf_file_date,parseDocSpec
 from config import Config
 from pages.query import get_pages_for_scanned_file,get_undocumented_pages_for_scanned_file,create_document_from_spec
 from pages.forms import CreateDocumentForm
@@ -24,12 +24,19 @@ def show_pages(sf_id:int):
     }
     form = CreateDocumentForm()
     if form.validate_on_submit():
-        command = form.command.data
-        specs = parseDocumentCommand(command)
-        for spec in specs:
-            create_document_from_spec(sf_id,spec)
-        #print(f"specs={specs}")
-        form.command.data = ""
+        dc_name = form.dc_name.data
+        dc_date = form.dc_date.data
+        dc_page_spec = form.dc_page_spec.data
+        specs = parseDocSpec(dc_page_spec)
+        pages = specs['pages']
+        print(f"dc_name={dc_name}")
+        print(f"dc_date={dc_date}")
+        print(f"dc_page_spec={dc_page_spec}")
+        create_document_from_spec(sf_id,dc_name,dc_date,pages)
+
+        form.dc_name.data = ""
+        form.dc_date.data = ""
+        form.dc_page_spec.data = ""
     result = get_pages_for_scanned_file(sf_id,False)
     updated_result = add_to_result(sf_id,result)
     #print(updated_result)

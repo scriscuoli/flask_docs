@@ -27,6 +27,7 @@ def get_pids_for_pages(sf_id:int, pages:list):
     # SELECT pg_id FROM `pages` WHERE sf_id = 2 and sf_page_number in (1,2,3);
     pgs = ",".join(map(str, pages))
     sqlString = f"SELECT pg_id FROM `pages` WHERE sf_id = {sf_id} and sf_page_number in ({pgs});"
+    print(f"get_pids_for_pages: {sqlString}")
     cursor.execute(sqlString)
     full_set = cursor.fetchall()
     return full_set
@@ -42,10 +43,11 @@ def create_document_page_entry(dc_id:int, pg_id:int):
     connection.commit()
     return dc_id
 
-def create_document_from_spec(sf_id:int, spec:dict):
-    # spec example {'name': 'xtreme', 'date': '2026-06-15', 'pages': [1, 2, 3, 4]}
-    dc_id = create_document(spec['name'],spec['date'])
-    rows = get_pids_for_pages(sf_id,spec['pages'])
+def create_document_from_spec(sf_id:int, dc_name:str, dc_date:str, specs:list):
+    print(f"create_document_from_spec: {sf_id}  {dc_name}  {dc_date}")
+    print(specs)
+    dc_id = create_document(dc_name,dc_date)
+    rows = get_pids_for_pages(sf_id,specs)
     for row in rows:
         pg_id = row['pg_id']
         create_document_page_entry(dc_id,pg_id)

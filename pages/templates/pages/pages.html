@@ -4,7 +4,7 @@
 <div class="container">
   <form method="POST">
     {{ form.csrf_token }} 
-    {{ form.command(size=50) }} {{ form.submit() }}
+    {{ form.dc_name(size=20) }} {{ form.dc_date() }}  {{ form.dc_page_spec(size=20) }}  {{ form.submit() }}
   </form>
   <div class="d-flex flex-wrap overflow-auto" style="max-height: 500px;">
     {% for r in result %}
