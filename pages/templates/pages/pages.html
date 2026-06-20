@@ -17,6 +17,7 @@
       <div class="card-body">
         <pre class="card-title">{{ r['pg_path'] }}</pre>
         <pre class="card-text">Page {{ r['sf_page_number'] }}</pre>
+        <a class="card-text" target="_blank" href="{{ r['pg_url'] }}">View in Full</a>
       </div>
     </div>
     {% endfor %}
