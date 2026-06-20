@@ -2,6 +2,7 @@ from flask import Blueprint,render_template,redirect,session,request,current_app
 from util import getSiteName,dbname,get_pdf_file_date,parseDocSpec
 from config import Config
 from pages.query import get_pages_for_scanned_file,get_undocumented_pages_for_scanned_file,create_document_from_spec
+from documents.query import get_distinct_document_names
 from pages.forms import CreateDocumentForm
 import os
 
@@ -38,10 +39,11 @@ def show_pages(sf_id:int):
         form.dc_date.data = ""
         form.dc_page_spec.data = ""
     result = get_pages_for_scanned_file(sf_id,False)
+    dd = get_distinct_document_names()
     updated_result = add_to_result(sf_id,result)
     #print(updated_result)
     
-    return render_template('pages/pages.html',form=form,result=updated_result,tvals=tvals)
+    return render_template('pages/pages.html',form=form,result=updated_result,dd=dd,tvals=tvals)
 
 
 def add_to_result(sf_id:int,result:list):

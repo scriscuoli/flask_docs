@@ -17,6 +17,17 @@ def create_document(dc_name:str, dc_date:str):
     connection.commit()
     return dc_id
 
+def get_distinct_document_names():
+    rtn = []
+    connection = util.db_connect(dbname)
+    cursor = connection.cursor(dictionary=True)
+    sqlString = "SELECT distinct dc_name FROM `documents` dc order by dc_name;"
+    cursor.execute(sqlString)
+    full_set = cursor.fetchall()
+    for row in full_set:
+        rtn.append(row['dc_name'])
+    return rtn
+
 def get_document_count():
     connection = util.db_connect(dbname)
     cursor = connection.cursor(dictionary=True)
