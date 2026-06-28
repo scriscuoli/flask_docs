@@ -17,6 +17,14 @@ def create_document(dc_name:str, dc_date:str):
     connection.commit()
     return dc_id
 
+def update_document(dc_id,dc_name,dc_date):
+    connection = util.db_connect(dbname)
+    cursor = connection.cursor(dictionary=True)
+    sqlString = f"update documents set dc_name = '{dc_name}', dc_date ='{dc_date}' where dc_id = {dc_id};"
+    print(f"upate_document:  ==>{sqlString}<==")
+    cursor.execute(sqlString)
+    connection.commit()
+
 def get_distinct_document_names():
     rtn = []
     connection = util.db_connect(dbname)

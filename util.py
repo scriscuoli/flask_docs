@@ -46,7 +46,7 @@ def password_verify(password: str, hashed_password: str) -> bool:
         # Handle invalid hash formats or encoding issues
         return False
     
-host="10.0.0.5"
+host="localhost"
 
 docs_db_config = {
     "host": host,

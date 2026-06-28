@@ -1,8 +1,8 @@
 from flask import Blueprint,render_template,redirect,session,url_for
 import util
-from documents.query import get_documents,get_document
+from documents.query import get_documents,get_document,update_document,get_distinct_document_names
 from pages.query import get_pages_for_doc
-from documents.forms import DaysBackForm
+from documents.forms import DaysBackForm,UpdateDocumentForm
 
 documents_bp = Blueprint('documents_bp', __name__,
                      template_folder='templates',
@@ -21,7 +21,7 @@ def show_documents_as_cards():
         "pageDescription": ""
     }
     form = DaysBackForm()
-    daysBack = 60
+    daysBack = 120
     if form.validate_on_submit():
         daysBack = int(form.dc_days_back.data)
     else:
@@ -43,7 +43,7 @@ def show_documents_as_table():
         "pageDescription": ""
     }
     form = DaysBackForm()
-    daysBack = 60
+    daysBack = 120
     if form.validate_on_submit():
         daysBack = int(form.dc_days_back.data)
     else:
@@ -68,7 +68,7 @@ def add_color(result):
 
 
 
-@documents_bp.route('/details/<int:dc_id>')
+@documents_bp.route('/details/<int:dc_id>',methods=['GET','POST'])
 def show_document_details(dc_id:int):
     if not session.get("name"):
         return redirect("/DocsApp/login")
@@ -80,16 +80,24 @@ def show_document_details(dc_id:int):
         "pageTitle": "",
         "pageDescription": ""
     }
-    print("----------------")
+    form = UpdateDocumentForm()
     doc_details = get_document(dc_id)
-    print(doc_details)
-    print("----------------")
+
+    if form.validate_on_submit():
+        dc_name = form.dc_name.data
+        dc_date = form.dc_date.data
+        update_document(dc_id,dc_name,dc_date)
+    else:
+        form.dc_name.data = doc_details[0]['dc_name']
+        form.dc_date.data = doc_details[0]['dc_date']
+
+    
     pages = get_pages_for_doc(dc_id)
-    print(pages)
-    print("----------------")
     updated = add_to_pages(pages)
+    dd = get_distinct_document_names()
+
     #print(updated)
-    return render_template('documents/document_details.html',doc_details=doc_details[0],pages=updated,tvals=tvals)
+    return render_template('documents/document_details.html',form=form,dd=dd,pages=updated,tvals=tvals)
 
 def add_to_pages(pages:list):
     rtn = []
