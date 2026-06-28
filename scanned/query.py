@@ -18,3 +18,12 @@ def get_scanned(days_back:int):
     cursor.execute(sqlString)
     myresult = cursor.fetchall()
     return myresult
+
+
+def get_scanned_file_name(sf_id:int):
+    connection = util.db_connect(dbname)
+    cursor = connection.cursor(dictionary=True)
+    sqlString = f"SELECT sf.* FROM `scanned_files` sf WHERE sf.sf_id = {sf_id};"
+    cursor.execute(sqlString)
+    row = cursor.fetchone()
+    return row['sf_path']

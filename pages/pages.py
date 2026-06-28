@@ -4,6 +4,7 @@ from config import Config
 from pages.query import get_pages_for_scanned_file,get_undocumented_pages_for_scanned_file,create_document_from_spec
 from documents.query import get_distinct_document_names
 from pages.forms import CreateDocumentForm
+from scanned.query import get_scanned_file_name
 import os
 
 
@@ -38,12 +39,13 @@ def show_pages(sf_id:int):
         form.dc_name.data = ""
         form.dc_date.data = ""
         form.dc_page_spec.data = ""
+    scanned_file_name = get_scanned_file_name(sf_id)
     result = get_pages_for_scanned_file(sf_id,False)
     dd = get_distinct_document_names()
     updated_result = add_to_result(sf_id,result)
     #print(updated_result)
     
-    return render_template('pages/pages.html',form=form,result=updated_result,dd=dd,tvals=tvals)
+    return render_template('pages/pages.html',form=form,scanned_file_name=scanned_file_name,result=updated_result,dd=dd,tvals=tvals)
 
 
 def add_to_result(sf_id:int,result:list):

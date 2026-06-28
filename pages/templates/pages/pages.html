@@ -3,8 +3,12 @@
 
 <div class="container">
   <form method="POST">
+    <h5>Document Pages for {{scanned_file_name}}</h5>
     {{ form.csrf_token }} 
-    {{ form.dc_name(list="dd", autocomplete="off", class="form-control", size=20) }} {{ form.dc_date() }}  {{ form.dc_page_spec(size=20) }}  {{ form.submit() }}
+    {{form.dc_name.label}} {{ form.dc_name(list="dd", autocomplete="off") }}
+    &nbsp;&nbsp;{{form.dc_date.label}} {{ form.dc_date() }}
+    &nbsp;&nbsp;{{form.dc_page_spec.label}} {{ form.dc_page_spec(size=20) }}
+    &nbsp;&nbsp;{{ form.submit() }}
     <datalist id="dd">
       {% for resp in dd %}
         <option value="{{ resp }}">

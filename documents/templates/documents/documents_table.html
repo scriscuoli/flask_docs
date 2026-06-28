@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+  <form method="POST">
+    <h5>Documents for last {{daysBack}} days</h5>
+    {{ form.csrf_token }} 
+    &nbsp;&nbsp;{{form.dc_days_back.label}} {{ form.dc_days_back(size=20) }}
+    &nbsp;&nbsp;{{ form.submit() }}
+  </form>
+  <br/><a href="/DocsApp/documents/cards"  class="btn btn-sm btn-primary">Show as Cards</a><br/>
+  <div class="row col-4 overflow-auto" style="max-height: 500px;">
+    <table class="table table-bordered">
+      <thead>
+        <tr><th>Date</th><th>Document</th><th>Action</th></tr>
+      </thead>
+      <tbody>
+{% for r in result %}
+        <tr>
+          <td style="background-color: {{ r['color'] }}">{{ r['dc_date'] }}</td>
+          <td style="background-color: {{ r['color'] }}">{{ r['dc_name'] }}</td>
+          <td style="background-color: {{ r['color'] }}"><a href="/DocsApp/documents/details/{{ r['dc_id'] }}">Details</a></td>
+        </tr>
+{% endfor %}
+      </tbody>
+    </table>
+    
+  </div>
+</div>
+
+{% endblock %}
