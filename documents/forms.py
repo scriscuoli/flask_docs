@@ -10,3 +10,8 @@ class UpdateDocumentForm(FlaskForm):
     dc_name = StringField("Name", validators=[DataRequired(), Length(min=1,max=20)])
     dc_date = DateField("Document Date",format='%Y-%m-%d', validators=[DataRequired()])
     submit = SubmitField('Update Document')
+
+class DocumentFindForm(FlaskForm):
+    dc_name = StringField("Document Name", validators=[DataRequired()])
+    dc_days_back = StringField("Days Back", validators=[DataRequired()])
+    submit = SubmitField('Find')

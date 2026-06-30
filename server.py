@@ -45,7 +45,6 @@ from user.user import user_bp
 from scanned.scanned import scanned_bp
 from pages.pages import pages_bp
 
-
 # blueprints
 app.register_blueprint(about_bp,url_prefix='/DocsApp/about')
 app.register_blueprint(admin_bp,url_prefix='/DocsApp/admin')

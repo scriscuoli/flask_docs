@@ -66,3 +66,17 @@ def get_document(dc_Id):
     cursor.execute(sqlString)
     full_set = cursor.fetchall()
     return full_set
+
+def find_docs(dc_name:str, days_back:int):
+    connection = util.db_connect(dbname)
+    cursor = connection.cursor(dictionary=True)
+    sqlString = f"SELECT dc.* FROM `documents` dc WHERE dc.dc_name = '{dc_name}';"
+    if days_back > 0:
+        days_ago = date.today() - timedelta(days=days_back)
+        formatted_date = days_ago.strftime("%Y-%m-%d")
+        sqlString = f"SELECT dc.* FROM `documents` dc WHERE dc.dc_name = '{dc_name}' and dc.dc_date > '{formatted_date}' order by dc.dc_date;"
+    
+    print(f"find_docs: {sqlString}")
+    cursor.execute(sqlString)
+    full_set = cursor.fetchall()
+    return full_set

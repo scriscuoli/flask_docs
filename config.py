@@ -17,10 +17,8 @@ class Config:
         self.DEBUG = self.parser.getboolean("flask", "debug")
 
         # Storage settings — resolve to absolute path
-        raw_pdfs_folder = self.parser.get("storage", "pdfs_folder")
-        self.PDFS_FOLDER = os.path.abspath(raw_pdfs_folder)
-        raw_pages_folder = self.parser.get("storage", "pages_folder")
-        self.PAGES_FOLDER = os.path.abspath(raw_pages_folder)
+        self.PDFS_FOLDER = os.path.join("static", "images", "pdfs")
+        self.PAGES_FOLDER = os.path.join("static", "images", "pages")
 
         max_mb = self.parser.getint("storage", "max_content_length_mb")
         self.MAX_CONTENT_LENGTH_MB = max_mb 

@@ -1,8 +1,8 @@
 from flask import Blueprint,render_template,redirect,session,url_for
 import util
-from documents.query import get_documents,get_document,update_document,get_distinct_document_names
+from documents.query import get_documents,get_document,update_document,get_distinct_document_names,find_docs
 from pages.query import get_pages_for_doc
-from documents.forms import DaysBackForm,UpdateDocumentForm
+from documents.forms import DaysBackForm,UpdateDocumentForm,DocumentFindForm
 
 documents_bp = Blueprint('documents_bp', __name__,
                      template_folder='templates',
@@ -66,7 +66,29 @@ def add_color(result):
         rtn.append(r)
     return rtn
 
-
+@documents_bp.route('/find/cards',methods=['GET','POST'])
+def show_find_cards():
+    if not session.get("name"):
+        return redirect("/DocsApp/login")
+    tvals = {
+        "site": util.getSiteName(),
+        "database" : util.dbname,
+        "name": session.get("name"),
+        "title":"Pages",
+        "pageTitle": "",
+        "pageDescription": ""
+    }
+    form = DocumentFindForm()
+    dc_name = ""
+    dc_days_back = 0
+    if form.validate_on_submit():
+        dc_name = str(form.dc_name.data)
+        dc_days_back = int(form.dc_days_back.data)
+    else:
+        form.dc_name.data = str(dc_name)
+        form.dc_days_back.data = str(dc_days_back)
+    result = find_docs(dc_name,dc_days_back)
+    return render_template('documents/documents_find_cards.html',form=form,dc_days_back=dc_days_back,result=result,tvals=tvals)
 
 @documents_bp.route('/details/<int:dc_id>',methods=['GET','POST'])
 def show_document_details(dc_id:int):
