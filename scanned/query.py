@@ -14,7 +14,7 @@ def get_scanned(days_back:int):
         days_ago = date.today() - timedelta(days=days_back)
         formatted_date = days_ago.strftime("%Y-%m-%d")
         sqlString = f"SELECT sf.*,pg.* FROM `scanned_files` sf, `pages` pg WHERE sf.sf_creation_date > '{formatted_date}' and pg.sf_id = sf.sf_id and pg.sf_page_number = 1;"
-    print(dbname + ": " + sqlString)
+    #print(dbname + ": " + sqlString)
     cursor.execute(sqlString)
     myresult = cursor.fetchall()
     return myresult

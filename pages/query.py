@@ -21,16 +21,44 @@ def get_pages_for_scanned_file(sf_id:int, index_only=True):
     else:
         return full_set
     
+def get_distinct_page_ids(index_only=True):
+    connection = util.db_connect(dbname)
+    cursor = connection.cursor(dictionary=True)
+    sqlString = "SELECT DISTINCT pg_id FROM `document_page` order by pg_id;"
+    #print(dbname + ": " + sqlString)
+    cursor.execute(sqlString)
+    full_set = cursor.fetchall()
+    if index_only:
+        indices = []
+        for row in full_set:
+            indices.append(row['pg_id'])
+        return indices
+    else:
+        return full_set
+    
 def get_pids_for_pages(sf_id:int, pages:list):
     connection = util.db_connect(dbname)
     cursor = connection.cursor(dictionary=True)
     # SELECT pg_id FROM `pages` WHERE sf_id = 2 and sf_page_number in (1,2,3);
     pgs = ",".join(map(str, pages))
     sqlString = f"SELECT pg_id FROM `pages` WHERE sf_id = {sf_id} and sf_page_number in ({pgs});"
-    print(f"get_pids_for_pages: {sqlString}")
+    #print(f"get_pids_for_pages: {sqlString}")
     cursor.execute(sqlString)
     full_set = cursor.fetchall()
     return full_set
+
+def get_undocumented_page_ids_for_scan_file(sf_id:int):
+    spi = get_pages_for_scanned_file(sf_id,True)
+    dpi = get_distinct_page_ids()
+    rtn = get_undocumented_page_ids(spi,dpi)
+    #print("get_undocumented_page_ids_for_scan_file")
+    #print(spi)
+    #print(dpi)
+    #print(rtn)
+    return rtn
+
+def get_undocumented_page_ids(scan_page_ids:list, distinct_page_ids:list):
+    return [x for x in scan_page_ids if x not in set(distinct_page_ids)]
 
 def create_document_page_entry(dc_id:int, pg_id:int):
     connection = util.db_connect(dbname)
@@ -44,8 +72,8 @@ def create_document_page_entry(dc_id:int, pg_id:int):
     return dc_id
 
 def create_document_from_spec(sf_id:int, dc_name:str, dc_date:str, specs:list):
-    print(f"create_document_from_spec: {sf_id}  {dc_name}  {dc_date}")
-    print(specs)
+    #print(f"create_document_from_spec: {sf_id}  {dc_name}  {dc_date}")
+    #print(specs)
     dc_id = create_document(dc_name,dc_date)
     rows = get_pids_for_pages(sf_id,specs)
     for row in rows:

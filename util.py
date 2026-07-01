@@ -117,7 +117,7 @@ def parseDocSpec(docSpec:str):
     name="unknown"
     dateVal = date.today().strftime("%Y-%m-%d")
     pages = []
-    print(f"Starting with =>{docSpec}<=")
+    #print(f"Starting with =>{docSpec}<=")
     np = docSpec.split(":")
     # 
     
@@ -141,7 +141,7 @@ def parseDocSpec(docSpec:str):
 
 def parseDocumentCommand(command:str):
     rtn = []
-    print(f"Starting with =>{command}<=")
+    #print(f"Starting with =>{command}<=")
     specs = command.split("|")
     for spec in specs:
         ds = parseDocSpec(spec)
