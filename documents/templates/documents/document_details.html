@@ -6,17 +6,17 @@
 <div class="container">
   <div class="row">
     <form method="POST">
-    <h5>Document Details</h5>
-    {{ form.csrf_token }} 
-    {{form.dc_name.label}} {{ form.dc_name(list="dd", autocomplete="off") }}
-    &nbsp;&nbsp;{{form.dc_date.label}} {{ form.dc_date() }}
-    &nbsp;&nbsp;{{ form.submit() }}
-    <datalist id="dd">
-      {% for resp in dd %}
-        <option value="{{ resp }}">
-        {% endfor %}
-    </datalist>
-  </form>
+      <h5>Document Details</h5>
+      {{ form.csrf_token }} 
+      {{form.dc_name.label}} {{ form.dc_name(list="dd", autocomplete="off") }}
+      &nbsp;&nbsp;{{form.dc_date.label}} {{ form.dc_date() }}
+      &nbsp;&nbsp;{{ form.submit() }}
+      <datalist id="dd">
+        {% for resp in dd %}
+          <option value="{{ resp }}">
+          {% endfor %}
+      </datalist>
+    </form>
   </div>
   <div class="row">
     <div class="d-flex flex-wrap overflow-auto" style="max-height: 500px;">

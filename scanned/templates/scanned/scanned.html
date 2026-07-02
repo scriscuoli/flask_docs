@@ -2,6 +2,13 @@
 {% block content %}
 
 <div class="container">
+  <form method="POST">
+    <h5>Documents for last {{daysBack}} days</h5>
+    {{ form.csrf_token }} 
+    &nbsp;&nbsp;{{form.days_back.label}} {{ form.days_back(size=20) }}
+    &nbsp;&nbsp;{{ form.submit() }}
+  </form>
+  <br/>
   <div class="d-flex flex-wrap overflow-auto" style="max-height: 500px;">
     {% for r in result %}
     <div class="card m-2" style="width: 18rem; padding-top: 1rem;">
