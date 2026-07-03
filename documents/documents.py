@@ -95,7 +95,39 @@ def show_find_cards():
         form.dc_date_from.data = dc_date_from
         form.dc_date_to.data = dc_date_to
     result = get_documents_by_date_range(dc_name,dc_date_from,dc_date_to)
-    return render_template('documents/documents_find_cards.html',form=form,result=result,tvals=tvals)
+    cres = add_color(result)
+    return render_template('documents/documents_find_cards.html',form=form,result=cres,tvals=tvals)
+
+@documents_bp.route('/find/table',methods=['GET','POST'])
+def show_find_table():
+    if not session.get("name"):
+        return redirect("/DocsApp/login")
+    tvals = {
+        "site": util.getSiteName(),
+        "database" : util.dbname,
+        "name": session.get("name"),
+        "title":"Pages",
+        "pageTitle": "",
+        "pageDescription": ""
+    }
+    form = DocumentFindForm()
+    dc_name = "Pick"
+    today = date.today()
+    ds = today
+    dc_date_from = ds
+    dc_date_to = ds
+
+    if form.validate_on_submit():
+        dc_name = form.dc_name_sel.data
+        dc_date_from = form.dc_date_from.data
+        dc_date_to = form.dc_date_to.data
+    else:
+        form.dc_name_sel.data = dc_name
+        form.dc_date_from.data = dc_date_from
+        form.dc_date_to.data = dc_date_to
+    result = get_documents_by_date_range(dc_name,dc_date_from,dc_date_to)
+    cres = add_color(result)
+    return render_template('documents/documents_find_table.html',form=form,result=cres,tvals=tvals)
 
 @documents_bp.route('/details/<int:dc_id>',methods=['GET','POST'])
 def show_document_details(dc_id:int):

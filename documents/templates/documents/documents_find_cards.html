@@ -10,7 +10,7 @@
     &nbsp;&nbsp;{{form.dc_date_to.label}} {{ form.dc_date_to(type="date")}}
     &nbsp;&nbsp;{{ form.submit() }}
   </form>
-  <br/><a href="/DocsApp/documents/find/table"  class="btn btn-sm btn-primary">Show as Table</a><br/>
+  <br/><a href="/DocsApp/documents/find/table"  class="btn btn-sm btn-primary">Find as Table</a><br/>
   <div class="d-flex flex-wrap overflow-auto" style="max-height: 500px;">
     {% for r in result %}
     <div class="card m-2" style="width: 10rem; padding-top: 1rem; background-color: {{ r['color'] }};">
