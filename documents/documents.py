@@ -1,8 +1,9 @@
 from flask import Blueprint,render_template,redirect,session,url_for
 import util
-from documents.query import get_documents,get_document,update_document,get_distinct_document_names,find_docs
+from documents.query import get_documents,get_document,update_document,get_distinct_document_names,find_docs,get_documents_by_date_range
 from pages.query import get_pages_for_doc
 from documents.forms import DaysBackForm,UpdateDocumentForm,DocumentFindForm
+from datetime import date
 
 documents_bp = Blueprint('documents_bp', __name__,
                      template_folder='templates',
@@ -79,16 +80,22 @@ def show_find_cards():
         "pageDescription": ""
     }
     form = DocumentFindForm()
-    dc_name = ""
-    dc_days_back = 0
+    dc_name = "Pick"
+    today = date.today()
+    ds = today
+    dc_date_from = ds
+    dc_date_to = ds
+
     if form.validate_on_submit():
-        dc_name = str(form.dc_name.data)
-        dc_days_back = int(form.dc_days_back.data)
+        dc_name = form.dc_name_sel.data
+        dc_date_from = form.dc_date_from.data
+        dc_date_to = form.dc_date_to.data
     else:
-        form.dc_name.data = str(dc_name)
-        form.dc_days_back.data = str(dc_days_back)
-    result = find_docs(dc_name,dc_days_back)
-    return render_template('documents/documents_find_cards.html',form=form,dc_days_back=dc_days_back,result=result,tvals=tvals)
+        form.dc_name_sel.data = dc_name
+        form.dc_date_from.data = dc_date_from
+        form.dc_date_to.data = dc_date_to
+    result = get_documents_by_date_range(dc_name,dc_date_from,dc_date_to)
+    return render_template('documents/documents_find_cards.html',form=form,result=result,tvals=tvals)
 
 @documents_bp.route('/details/<int:dc_id>',methods=['GET','POST'])
 def show_document_details(dc_id:int):

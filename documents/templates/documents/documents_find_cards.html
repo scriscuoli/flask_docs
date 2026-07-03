@@ -3,10 +3,11 @@
 
 <div class="container">
   <form method="POST">
-    <h5>Documents for last {{daysBack}} days</h5>
+    <h5>Documents Finder</h5>
     {{ form.csrf_token }} 
-    &nbsp;&nbsp;{{form.dc_name.label}} {{ form.dc_name(size=20) }}
-    &nbsp;&nbsp;{{form.dc_days_back.label}} {{ form.dc_days_back(size=20) }}
+    &nbsp;&nbsp;{{form.dc_name_sel.label}} {{ form.dc_name_sel() }}
+    &nbsp;&nbsp;{{form.dc_date_from.label}} {{ form.dc_date_from(type="date") }}
+    &nbsp;&nbsp;{{form.dc_date_to.label}} {{ form.dc_date_to(type="date")}}
     &nbsp;&nbsp;{{ form.submit() }}
   </form>
   <br/><a href="/DocsApp/documents/find/table"  class="btn btn-sm btn-primary">Show as Table</a><br/>

@@ -59,6 +59,25 @@ def get_documents(days_back:int):
     full_set = cursor.fetchall()
     return full_set
 
+def get_documents_by_date_range(dc_name:str, date_from:str, date_to: str):
+    result = []
+    if dc_name != "Pick":
+        connection = util.db_connect(dbname)
+        cursor = connection.cursor(dictionary=True)
+        sqlString = "SELECT * FROM `documents` dc where "
+        if dc_name != "Any":
+            sqlString = sqlString + f" dc.dc_name = '{dc_name}' and"
+        
+        sqlString = sqlString + f" dc.dc_date >= '{date_from}'"
+        sqlString = sqlString + f" and dc.dc_date <= '{date_to}'"
+        sqlString = sqlString + " order by dc.dc_date,dc.dc_name;"
+
+        print(sqlString)
+        cursor.execute(sqlString)
+        result = cursor.fetchall()
+
+    return result
+
 def get_document(dc_Id):
     connection = util.db_connect(dbname)
     cursor = connection.cursor(dictionary=True)

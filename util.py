@@ -147,3 +147,18 @@ def parseDocumentCommand(command:str):
         ds = parseDocSpec(spec)
         rtn.append(ds)
     return rtn
+
+def rows_to_choices(rows,f1,f2):
+    choices = []
+  
+    for row in rows:
+        v1 = row[f1]
+        v2 = row[f2]
+        choices.append((v1,v2))
+    return choices
+
+def list_to_choices(mylist:list):
+    choices = []
+    for item in mylist:
+        choices.append((item,item))
+    return choices
