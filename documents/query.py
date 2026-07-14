@@ -10,10 +10,12 @@ def get_specific_document(dc_name:str, dc_date:str):
     connection = util.db_connect(dbname)
     cursor = connection.cursor(dictionary=True)
     sqlString = f"select dc_id from documents where dc_name = '{dc_name}' and dc_date = '{dc_date}';"
+    print(sqlString)
     cursor.execute(sqlString)
     full_set = cursor.fetchall()
     for row in full_set:
-        dc_id = row['dc_name']
+        dc_id = row['dc_id']
+    print(f"dc_id={dc_id}")
     return dc_id
 
 def create_document(dc_name:str, dc_date:str):
