@@ -14,7 +14,7 @@ class UpdateDocumentForm(FlaskForm):
     dc_date = DateField("Document Date",format='%Y-%m-%d', validators=[DataRequired()])
     submit = SubmitField('Update Document')
 
-class DocumentFindForm(FlaskForm):
+class OldDocumentFindForm(FlaskForm):
     #dc_name = StringField("Document Name", validators=[DataRequired()])
     dd = get_distinct_document_names()
     choices = list_to_choices(dd)
@@ -24,3 +24,17 @@ class DocumentFindForm(FlaskForm):
     dc_date_from = DateField("From:",format='%Y-%m-%d', default=date.today, validators=[DataRequired()])
     dc_date_to = DateField("To:",format='%Y-%m-%d', default=date.today, validators=[DataRequired()])
     submit = SubmitField('Find')
+
+class DocumentFindForm(FlaskForm):
+    dc_name_sel = SelectField("Document Name", choices=[])  # placeholder, populated in __init__
+    dc_date_from = DateField("From:", format='%Y-%m-%d', default=date.today, validators=[DataRequired()])
+    dc_date_to = DateField("To:", format='%Y-%m-%d', default=date.today, validators=[DataRequired()])
+    submit = SubmitField('Find')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        dd = get_distinct_document_names()
+        choices = list_to_choices(dd)
+        choices.insert(0, ("Any", "Any"))
+        choices.insert(0, ("Pick", "Pick"))
+        self.dc_name_sel.choices = choices
